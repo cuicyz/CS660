@@ -1,2 +1,53 @@
-drop
+drop table if exists Student;
+drop table if exists Dept;
+drop table if exists Prof;
+drop table if exists Course;
+drop table if exists Major;
+drop table if exists Section;
+drop table if exists Enroll;
+
+create table Student(
+    sid integer,
+    sname char(20),
+    age integer,
+    year date,
+    gpa real);
+create table Dept(
+    dname char(20),
+    numphds integer);
+create table Prof(
+    pname char(20),
+    dname char(20),
+    age integer);
+create table Course(
+    cno integer,
+    cname char(20),
+    dname char(20));
+create table Major(
+    dname char(20),
+    sid integer);
+create table Section(
+    dname char(20),
+    cno integer,
+    sectno integer,
+    pname char(20));
+create table Enroll(
+    sid integer,
+    grade real,
+    dname char(20),
+    cno integer,
+    sectno integer);
+    
+insert into Student value(1,'cyz',23,1996,3.5);
+insert into Student value(2,'cz',23,1996,3.6);
+insert into Student value(3,'fbw',23,1996,3.7);
+insert into Student value(4,'lbh',23,1996,3.8);
+insert into Major value('CS',1);
+insert into Major value('CS',2);
+insert into Major value('CS',3);
+insert into Major value('Math',4);
+
+select s.sname,s.gpa
+from Student s,Major m
+where s.sid=m.sid and m.dname='CS'
 
