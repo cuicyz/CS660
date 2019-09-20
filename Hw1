@@ -17,14 +17,15 @@ create table Catalog (
     
 insert into Suppliers values(1,'cyz','Boston');
 insert into Suppliers values(2,'cz','Texas');
-insert into Suppliers values(3,'fbw','NJ');
+insert into Suppliers values(3,'fbw','Boston');
 insert into Parts values(100,'mmq','red');
 insert into Parts values(200,'dragonite','blue');
 insert into Parts values(300,'morrel','green');
-insert into Catalog values(1,100,5500);
-insert into Catalog values(1,200,6500);
-insert into Catalog values(1,300,7500);
-insert into Catalog values(2,300,8500);
+insert into Catalog values(1,100,50);
+insert into Catalog values(1,200,100);
+insert into Catalog values(1,300,150);
+insert into Catalog values(2,300,150);
+insert into Catalog values(3,300,150);
 
 //Problem1.1
 select distinct p.pname
@@ -57,6 +58,14 @@ where not exists((select p.pname
                  ))
 
 //Problem1.3
+select s.sname,avg(c.cost)
+from Catalog c,(select s1.sid,s1.sname,s1.address
+                from Suppliers s1,Catalog c1
+                where s1.sid=c1.sid
+                group by s1.sid
+                having avg(c1.cost)>100) as s
+where c.sid=s.sid
+group by 1
 
 //Problem1.4
 select c1.sid
