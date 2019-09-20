@@ -1,3 +1,7 @@
+drop table if exists Suppliers;
+drop table if exists Parts;
+drop table if exists Catalog;
+
 create table Suppliers (
     sid integer primary key,
     sname char(20),
@@ -7,14 +11,45 @@ create table Parts (
     pname char(20),
     color char(20));
 create table Catalog (
-    sid integer primary key,
+    sid integer,
     pid integer,
     cost real);
     
 insert into Suppliers values(10,'joe','freeman');
+insert into Suppliers values(20,'cz','freeman');
+insert into Suppliers values(30,'e','freeman');
 insert into Parts values(100,'mmq','red');
+insert into Parts values(200,'cz','blue');
+insert into Parts values(300,'e','red');
 insert into Catalog values(10,100,5500);
+insert into Catalog values(10,200,6500);
+insert into Catalog values(10,300,7500);
 
-select S.pname
-from Suppliers S,Catalog C
-where S.pid=C.pid
+select distinct p.pname
+from Parts p,Catalog C
+where p.pid=c.pid;
+
+select s.sname
+from Suppliers s
+where not exists((select p.pname
+                 from Parts p
+                 where p.color='red'
+                 )
+                except
+                (select p.pname
+                 from Catalog c,Parts p
+                 where c.sid=s.sid and c.pid=p.pid and p.color='red'
+                 ))
+union
+select s.sname
+from Suppliers s
+where not exists((select p.pname
+                 from Parts p
+                 where p.color='green'
+                 )
+                except
+                (select p.pname
+                 from Catalog c,Parts p
+                 where c.sid=s.sid and c.pid=p.pid and p.color='green'
+                 ))
+                 
