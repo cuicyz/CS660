@@ -15,20 +15,23 @@ create table Catalog (
     pid integer,
     cost real);
     
-insert into Suppliers values(10,'joe','freeman');
-insert into Suppliers values(20,'cz','freeman');
-insert into Suppliers values(30,'e','freeman');
+insert into Suppliers values(1,'cyz','Boston');
+insert into Suppliers values(2,'cz','Texas');
+insert into Suppliers values(3,'fbw','NJ');
 insert into Parts values(100,'mmq','red');
-insert into Parts values(200,'cz','blue');
-insert into Parts values(300,'e','red');
-insert into Catalog values(10,100,5500);
-insert into Catalog values(10,200,6500);
-insert into Catalog values(10,300,7500);
+insert into Parts values(200,'dragonite','blue');
+insert into Parts values(300,'morrel','green');
+insert into Catalog values(1,100,5500);
+insert into Catalog values(1,200,6500);
+insert into Catalog values(1,300,7500);
+insert into Catalog values(2,300,8500);
 
+//Problem1.1
 select distinct p.pname
 from Parts p,Catalog C
 where p.pid=c.pid;
 
+//Problem1.2
 select s.sname
 from Suppliers s
 where not exists((select p.pname
@@ -52,4 +55,21 @@ where not exists((select p.pname
                  from Catalog c,Parts p
                  where c.sid=s.sid and c.pid=p.pid and p.color='green'
                  ))
+
+//Problem1.3
+
+//Problem1.4
+select c1.sid
+from Catalog c1
+where c1.cost>(select avg(c2.cost)
+               from Catalog c2
+               where c1.sid=c2.sid);
+              
+//Problem1.5
+select s.sname,max(c.cost) as maxcost
+from Parts p,Catalog c,(select distinct s1.sid,s1.sname,s1.address
+                        from Suppliers s1,Parts p1,Catalog c1
+                        where c1.pid=p1.pid and c1.sid=s1.sid and p1.color='green' or p1.color='red') as s
+where p.pid=c.pid and c.sid=s.sid
+group by s.sname;
                  
