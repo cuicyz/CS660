@@ -79,4 +79,10 @@ order by 2 desc
 limit 3;
 
 //Problem2.3
+select p.pname,p.dname
+from Prof p,(select p1.dname,min(p1.age) as minage
+             from Prof p1
+             group by 1) as p2
+where p.dname=p2.dname and p.age=p2.minage
 
+//Problem2.4
