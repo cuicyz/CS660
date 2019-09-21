@@ -43,25 +43,30 @@ insert into Student values(2,'cz',23,'1996-08-10',3.6);
 insert into Student values(3,'fbw',23,'1996-09-10',3.7);
 insert into Student values(4,'lbh',23,'1996-10-10',3.8);
 insert into Student values(5,'zwy',23,'1996-11-10',3.9);
-insert into Dept values('CS',1);
+insert into Dept values('CS',2);
 insert into Dept values('Math',1);
 insert into Dept values('History',1);
+insert into Prof values('Jason','CS',35);
 insert into Prof values('Mike','CS',30);
 insert into Prof values('Huang','Math',29);
-insert into Prof values('Jack','History',28);
+insert into Prof values('Smith','History',28);
 insert into Course values(1,'Linear Algebra','Math');
 insert into Course values(2,'Computer Science','CS');
 insert into Course values(3,'America History','History');
+insert into Course values(4,'Europe History','History');
 insert into Major values('CS',1);
 insert into Major values('CS',2);
 insert into Major values('CS',3);
 insert into Major values('Math',4);
 insert into Major values('History',5);
 insert into Section values('CS',1,100,'Mike');
-insert into Section values('History',3,300,'Jack');
+insert into Section values('History',3,300,'Smith');
+insert into Section values('History',4,400,'Smith');
 insert into Enroll values(1,3.3,'CS',2,100);
 insert into Enroll values(1,3.7,'History',3,300);
+insert into Enroll values(1,3.5,'History',4,400);
 insert into Enroll values(2,3.6,'CS',2,100);
+insert into Enroll values(3,2.5,'CS',2,100);
 
 //Problem2.1
 select s.sname
@@ -96,3 +101,17 @@ where not exists((select se.cno
                  (select se.cno
                   from Section se,Enroll e
                   where se.pname='Smith' and se.cno=e.cno and e.sid=st.sid));
+                  
+//Problem2.5
+select new.sname,new.gpa,new.avg_grade
+from
+(
+select satstudent.sid,satstudent.sname,satstudent.gpa,avg(e1.grade) as avg_grade
+from (select s.sid,s.sname,s.gpa
+      from Student s,Enroll e
+      where s.sid=e.sid and e.dname='CS'
+      group by 1
+      having avg(e.grade)>=3.2 and s.gpa>=3.0) as satstudent,Enroll e1
+where satstudent.sid=e1.sid
+group by 1,2,3
+) as new
