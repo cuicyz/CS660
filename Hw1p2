@@ -1,5 +1,5 @@
 drop table if exists Student;
-drop table if exists Dept;
+drop table if exists Dept cascade;
 drop table if exists Prof;
 drop table if exists Course;
 drop table if exists Major;
@@ -7,20 +7,20 @@ drop table if exists Section;
 drop table if exists Enroll;
 
 create table Student(
-    sid integer,
+    sid integer primary key,
     sname char(20),
     age integer,
     year date,
     gpa real);
 create table Dept(
-    dname char(20),
+    dname char(20) primary key,
     numphds integer);
 create table Prof(
-    pname char(20),
+    pname char(20) primary key,
     dname char(20),
     age integer);
 create table Course(
-    cno integer,
+    cno integer primary key,
     cname char(20),
     dname char(20));
 create table Major(
@@ -29,7 +29,7 @@ create table Major(
 create table Section(
     dname char(20),
     cno integer,
-    sectno integer,
+    sectno integer primary key,
     pname char(20));
 create table Enroll(
     sid integer,
@@ -38,10 +38,10 @@ create table Enroll(
     cno integer,
     sectno integer);
     
-insert into Student values(1,'cyz',23,1996,3.5);
-insert into Student values(2,'cz',23,1996,3.6);
-insert into Student values(3,'fbw',23,1996,3.7);
-insert into Student values(4,'lbh',23,1996,3.8);
+insert into Student values(1,'cyz',23,'1996-07-10',3.5);
+insert into Student values(2,'cz',23,'1996-08-10',3.6);
+insert into Student values(3,'fbw',23,'1996-09-10',3.7);
+insert into Student values(4,'lbh',23,'1996-10-10',3.8);
 insert into Dept values('CS',1);
 insert into Dept values('Math',1);
 insert into Prof values('Mike','CS',30);
@@ -54,8 +54,7 @@ insert into Major values('CS',3);
 insert into Major values('Math',4);
 insert into Section values('CS',10,100,'Mike');
 insert into Enroll values(1,3.5,'CS',10,100);
-
+                           
 select s.sname,s.gpa
 from Student s,Major m
 where s.sid=m.sid and m.dname='CS'
-
