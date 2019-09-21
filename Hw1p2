@@ -62,10 +62,21 @@ insert into Section values('History',3,300,'Jack');
 insert into Enroll values(1,3.3,'CS',2,100);
 insert into Enroll values(1,3.7,'History',3,300);
 insert into Enroll values(2,3.6,'CS',2,100);
-                           
+
+//Problem2.1
 select s.sname
 from Enroll e,Course c,(select s1.sid,s1.sname
                         from Enroll e1,Course c1,Student s1
                         where s1.sid=e1.sid and e1.cno=c1.cno and c1.dname='CS'
                         ) as s
 where s.sid=e.sid and e.cno=c.cno and c.dname='History';
+
+//Problem2.2
+select s.sname,s.gpa
+from Student s,Major m
+where s.sid=m.sid and m.dname='CS'
+order by 2 desc
+limit 3;
+
+//Problem2.3
+
