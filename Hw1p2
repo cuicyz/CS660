@@ -38,14 +38,20 @@ create table Enroll(
     cno integer,
     sectno integer);
     
-insert into Student value(1,'cyz',23,1996,3.5);
-insert into Student value(2,'cz',23,1996,3.6);
-insert into Student value(3,'fbw',23,1996,3.7);
-insert into Student value(4,'lbh',23,1996,3.8);
-insert into Major value('CS',1);
-insert into Major value('CS',2);
-insert into Major value('CS',3);
-insert into Major value('Math',4);
+insert into Student value (1,'cyz',23,1996,3.5);
+insert into Student value (2,'cz',23,1996,3.6);
+insert into Student value (3,'fbw',23,1996,3.7);
+insert into Student value (4,'lbh',23,1996,3.8);
+insert into Dept value ('CS',1);
+insert into Dept value ('Math',1);
+insert into Prof value ('Mike','CS',30)
+insert into Prof value ('Huang','Math',29)
+insert into Course value (1,'Linear Algebra','Math')
+insert into Course value (2,
+insert into Major value ('CS',1);
+insert into Major value ('CS',2);
+insert into Major value ('CS',3);
+insert into Major value ('Math',4);
 
 select s.sname,s.gpa
 from Student s,Major m
