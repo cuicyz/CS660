@@ -86,3 +86,13 @@ from Prof p,(select p1.dname,min(p1.age) as minage
 where p.dname=p2.dname and p.age=p2.minage
 
 //Problem2.4
+select st.sname,st.gpa
+from Student st
+where not exists((select se.cno
+                  from Section se
+                  where se.pname='Smith'
+                 )
+                 except
+                 (select se.cno
+                  from Section se,Enroll e
+                  where se.pname='Smith' and se.cno=e.cno and e.sid=st.sid));
