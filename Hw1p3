@@ -41,5 +41,18 @@ create table Works (
         )));
         
 //Problem3.4
+create trigger Least_Salary_for_Manager after update on Emp
+for each row
+when(old.salary<new.salary)
+begin
+    update Emp e1
+    set e1.salary=new.salary
+    where e1.salary<new.salary and e1.eid in (select d.managerid
+                                              from Emp e,Works w,Dept d
+                                              where e.eid=w.eid and w.did=d.did)
+end;
+
+//Problem3.5
+
 
     
