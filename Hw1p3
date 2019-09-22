@@ -1,1 +1,20 @@
+drop table if exists Emp;
+drop table if exists Works;
+drop table if exists Dept;
 
+create table Emp values(
+    eid integer primary key,
+    ename char(20),
+    age integer,
+    salary real);
+
+create table Works values(
+    eid integer,
+    did integer,
+    pct time integer);
+    
+create table Dept values(
+    did integer,
+    dname char(20),
+    budget real,
+    managerid integer);
