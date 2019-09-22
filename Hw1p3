@@ -2,19 +2,44 @@ drop table if exists Emp;
 drop table if exists Works;
 drop table if exists Dept;
 
-create table Emp values(
-    eid integer primary key,
+//Problem3.1
+create table Emp (
+    eid integer,
     ename char(20),
     age integer,
-    salary real);
+    salary real,
+    primary key(eid),
+    check(salary>2000));
 
-create table Works values(
-    eid integer,
-    did integer,
-    pct time integer);
-    
-create table Dept values(
+//Problem3.2
+create table Dept (
     did integer,
     dname char(20),
     budget real,
     managerid integer);
+create assertion Manager_is_employee
+check((select count(*)
+      from Dept d
+      where d.managerid not in (select e.eid
+                                from Emp e))=0)
+                                
+//Problem3.3
+create table Works (
+    eid integer,
+    did integer,
+    pct_time integer,
+    primary key (eid,did),
+    check((
+        select count(distinct w.eid)
+        from Works w
+        group by w.eid
+        having sum(pct_time)>100)=0 and
+          (select count(distinct w.eid)
+           from Works w
+           group by w.eid
+           having sum(pct_time<100)=0
+        )));
+        
+//Problem3.4
+
+    
