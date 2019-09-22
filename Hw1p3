@@ -53,6 +53,17 @@ begin
 end;
 
 //Problem3.5
+drop table if exists Dept cascade;
+create table Dept (
+    did integer,
+    dname char(20),
+    budget real,
+    managerid integer);
+create assertion Budget_limit
+check((select count(*)
+       from Dept d
+       where d.budget>(select sum(d1.budget)*0.2
+                       from Dept d1)));
 
 
     
