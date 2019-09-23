@@ -16,12 +16,11 @@ create table Dept (
     did integer,
     dname char(20),
     budget real,
-    managerid integer);
-create assertion Manager_is_employee
-check((select count(*)
-      from Dept d
-      where d.managerid not in (select e.eid
-                                from Emp e))=0)
+    managerid integer
+    check((select count(*)
+           from Dept d
+           where d.managerid not in (select e.eid
+                                     from Emp e))=0));
                                 
 //Problem3.3
 create table Works (
