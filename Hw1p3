@@ -28,17 +28,18 @@ create table Works (
     eid integer,
     did integer,
     pct_time integer,
-    primary key (eid,did),
-    check((
-        select count(distinct w.eid)
-        from Works w
-        group by w.eid
-        having sum(pct_time)>100)=0 and
-          (select count(distinct w.eid)
-           from Works w
-           group by w.eid
-           having sum(pct_time<100)=0
-        )));
+    primary key (eid,did));
+create assertion TotalWork
+check((
+    select count(distinct w.eid)
+    from Works w
+    group by w.eid
+    having sum(pct_time)>100)=0 and
+      (select count(distinct w.eid)
+       from Works w
+       group by w.eid
+       having sum(pct_time<100)=0
+      )));
         
 //Problem3.4
 create trigger Least_Salary_for_Manager after update on Emp
@@ -53,7 +54,6 @@ begin
 end;
 
 //Problem3.5
-drop table if exists Dept cascade;
 create table Dept (
     did integer,
     dname char(20),
