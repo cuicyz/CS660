@@ -63,7 +63,7 @@ from Catalog c,(select s1.sid,s1.sname,s1.address
                 from Suppliers s1,Catalog c1
                 where s1.sid=c1.sid
                 group by s1.sid
-                having avg(c1.cost)>100) as s
+                having min(c1.cost)>100) as s
 where c.sid=s.sid
 group by 1
 
