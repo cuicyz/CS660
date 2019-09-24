@@ -64,6 +64,19 @@ check((select count(*)
        from Dept d
        where d.budget>(select sum(d1.budget)*0.2
                        from Dept d1))=0);
-
-
+                       
+//Problem3.6
+create trigger new_manager before delete 
+on Emp for each row
+when (old.eid=(select d.managerid
+               from Works w,Emp e,Dept d
+               where d.did=w.did and w.eid=e.eid))
+begin
+update Dept d1
+set d1.managerid=(select e1.eid
+                  from Works w1,Emp e1
+                  where old.eid=w1.eid and w1.did=d1.did
+                  group by e1.eid
+                  having e1.salary=max(e1.salary))
+end;
     
