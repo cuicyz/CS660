@@ -81,7 +81,7 @@ select s.sname,s.gpa
 from Student s,Major m
 where s.sid=m.sid and m.dname='CS'
 order by 2 desc
-limit 3;
+limit 10;
 
 //Problem2.3
 select p.pname,p.dname
